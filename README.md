@@ -13,3 +13,9 @@ The flow of the program should run as follows:
 - then downlading zxcvbn
 - then running newStrengthDetermination.py to get the strengths
 - also running cosine_similar.py to get the cosine similarity
+
+
+The datasets that were used in this project were:
+- MySpace: https://github.com/danielmiessler/SecLists/blob/master/Passwords/Leaked-Databases/myspace.txt 
+- Richelieu: https://github.com/tarraschk/richelieu
+- RockYou: https://github.com/danielmiessler/SecLists/tree/master/Passwords
