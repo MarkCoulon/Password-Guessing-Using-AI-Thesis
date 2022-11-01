@@ -1,35 +1,45 @@
 import pandas as pd
-import numpy as np
+import sys
 
-def strip_ascii(text):
-    return "".join(char for char in text if char.isascii())  # ord(char) < 127) #  or char in "\n"
+# filename = "data/myspace.txt"
+# newFileName = "data/myspace.txt"  
+# blankfilename = "data/myspace.txt"
+filename = sys.argv[1]
+newFileName = filename
+blankfilename = filename
 
-# filename = "data/cleanRockYou.txt"
-filename = "11_4_samples_large.txt"
-
-
-with open(filename) as f: # , encoding='latin1'
+with open(filename, encoding='latin1') as f:
     lines = f.readlines()
 
+i = 0
 print("read the lines with length " + str(len(lines)))
 
-# using pandas
-df = pd.Series(lines, name="values")
+for word in lines:
+    if (i % 100000 == 0):
+      print(str((i/len(lines)) * 100) + " %")
+    # print(str(i) + "/" + str(len(lines)))
+    for letter in word:
+        # print(letter)
+        if ord(letter) >= 128:
+            #print("error with word " + str(word))
+            #print(str(i) + "/" + str(len(lines)))
+            lines.remove(word)
+            break
 
-newDF = df.to_frame()
+    i += 1
 
-newDF['values'] = newDF.apply(lambda row: strip_ascii(row['values']), axis = 1)
+print("writing")
+with open(newFileName, 'w') as f: # "data/cleanRockYou.txt"
+    f.write(''.join(lines))
 
-print(newDF)
+print("removing blanks")
+with open(blankfilename, 'r', encoding='latin1') as f:
+    lines = f.readlines()
 
-npArray = newDF.to_numpy()
-print("numpy")
-print(npArray)
+print("writing")
+with open(blankfilename, 'w', encoding='latin1') as f:
+    for line in lines:
+        if not line.isspace():
+            f.write(line)
 
-content = str(npArray)
-print("Content")
-print(content)
-
-with open("11_4_samples_done.txt", 'w') as f:
-    f.writelines(content)
-
+print("done")
