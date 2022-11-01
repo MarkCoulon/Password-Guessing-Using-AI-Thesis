@@ -1,6 +1,10 @@
-filename = "data/rockyou.txt"
+import sys
+# filename = "data/myspace.txt"
+# newfilename = "data/cleanmyspace.txt"
+filename = sys.argv[1]
+newfilename = sys.argv[2]
 
-with open(filename) as f:
+with open(filename, 'r', encoding='latin-1') as f:
     lines = f.readlines()
 
 print("Length of file: " + str(len(lines)))
@@ -20,7 +24,7 @@ for word in new_list:
 print("writing")
 print("Length of file after removal2: " + str(len(new_list)))
 
-with open("data/cleanRockYou.txt", 'w') as f:
+with open(newfilename, 'w') as f:
     f.write(''.join(new_list))
 
 
